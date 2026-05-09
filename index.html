@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>GRE Accountability Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
+<style>
+:root { color-scheme: light; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #f7f8fa;
+  color: #1a1d21;
+  line-height: 1.5;
+  padding: 24px;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+/* ---------- Header ---------- */
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1F4E79;
+  letter-spacing: -0.02em;
+}
+.header .sub {
+  color: #6b7280;
+  font-size: 14px;
+  margin-top: 4px;
+}
+.countdown {
+  background: linear-gradient(135deg, #1F4E79 0%, #2563eb 100%);
+  color: white;
+  padding: 16px 24px;
+  border-radius: 12px;
+  text-align: right;
+  box-shadow: 0 4px 12px rgba(31, 78, 121, 0.2);
+}
+.countdown .days {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+}
+.countdown .label {
+  font-size: 12px;
+  opacity: 0.9;
+  margin-top: 4px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.countdown .date {
+  font-size: 13px;
+  opacity: 0.85;
+  margin-top: 2px;
+}
+
+/* ---------- Cards ---------- */
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 16px;
+}
+.card h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1d21;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card h2 .badge {
+  background: #DCE6F1;
+  color: #1F4E79;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ---------- Stats grid ---------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.stat {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  position: relative;
+}
+.stat .num {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1F4E79;
+  line-height: 1;
+}
+.stat .lbl {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.stat .delta {
+  font-size: 11px;
+  color: #059669;
+  margin-top: 4px;
+}
+
+/* ---------- Two column layout ---------- */
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+@media (max-width: 800px) {
+  .row { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .header { grid-template-columns: 1fr; }
+}
+
+/* ---------- Today block ---------- */
+.today-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #f9fafb;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid #e5e7eb;
+  transition: all 0.15s;
+}
+.checkbox-row:hover { background: #f3f4f6; }
+.checkbox-row.done { background: #ecfdf5; border-color: #a7f3d0; }
+.checkbox-row input { width: 18px; height: 18px; cursor: pointer; accent-color: #1F4E79; }
+.checkbox-row label { cursor: pointer; flex: 1; font-size: 14px; }
+.checkbox-row.done label { color: #059669; text-decoration: line-through; }
+
+/* ---------- Forms ---------- */
+.form-row {
+  display: flex;
+  gap: 8px;
+  align-items: end;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 80px;
+}
+.form-group label {
+  font-size: 11px;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+input[type="text"], input[type="number"], input[type="date"], select, textarea {
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  background: white;
+  color: #1a1d21;
+  width: 100%;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #1F4E79;
+  box-shadow: 0 0 0 3px rgba(31, 78, 121, 0.1);
+}
+button {
+  padding: 9px 16px;
+  background: #1F4E79;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+button:hover { background: #163e60; }
+button.secondary { background: #f3f4f6; color: #1a1d21; border: 1px solid #d1d5db; }
+button.secondary:hover { background: #e5e7eb; }
+button.danger { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+button.danger:hover { background: #fecaca; }
+button.small { padding: 4px 10px; font-size: 12px; }
+
+/* ---------- Tables ---------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+th, td {
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+th {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280;
+  font-weight: 600;
+  background: #f9fafb;
+}
+tr:hover { background: #f9fafb; }
+.empty {
+  padding: 32px 0;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* ---------- Streak ---------- */
+.streak-flame {
+  display: inline-block;
+  font-size: 24px;
+  margin-right: 4px;
+}
+
+/* ---------- Weekly plan ---------- */
+.week {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+.week-header {
+  padding: 12px 16px;
+  background: #f9fafb;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 14px;
+}
+.week-header:hover { background: #f3f4f6; }
+.week-header.active { background: #DCE6F1; color: #1F4E79; }
+.week-header.current { background: linear-gradient(90deg, #DCE6F1 0%, #f9fafb 100%); border-left: 3px solid #1F4E79; }
+.week-body { display: none; padding: 12px 16px; background: white; }
+.week-body.show { display: block; }
+.week-progress {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* ---------- Score badge ---------- */
+.score-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 13px;
+}
+.score-good { background: #d1fae5; color: #065f46; }
+.score-ok { background: #fef3c7; color: #92400e; }
+.score-low { background: #fee2e2; color: #991b1b; }
+
+/* ---------- Footer ---------- */
+.footer {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding: 16px 0 8px;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 24px;
+}
+.notice {
+  font-size: 13px;
+  color: #6b7280;
+  background: #fffbeb;
+  border-left: 3px solid #f59e0b;
+  padding: 10px 14px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+/* ---------- Chart container ---------- */
+.chart-wrap { position: relative; height: 240px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div>
+    <h1>GRE Accountability Dashboard</h1>
+    <div class="sub">Anmol &middot; Target: 324–330 &middot; Test day: Friday, June 26, 2026</div>
+  </div>
+  <div class="countdown">
+    <div class="days" id="countdown-days">--</div>
+    <div class="label">days to test day</div>
+    <div class="date" id="countdown-week">Week -- of 7</div>
+  </div>
+</div>
+
+<!-- STAT TILES -->
+<div class="stats">
+  <div class="stat"><div class="num" id="stat-streak">0</div><div class="lbl"><span class="streak-flame">🔥</span>Current streak</div></div>
+  <div class="stat"><div class="num" id="stat-hours">0</div><div class="lbl">Total study hours</div></div>
+  <div class="stat"><div class="num" id="stat-vocab">0</div><div class="lbl">Vocab words seen</div></div>
+  <div class="stat"><div class="num" id="stat-mock">—</div><div class="lbl">Latest mock score</div></div>
+</div>
+
+<!-- TODAY -->
+<div class="card">
+  <h2>Today's Check-in <span class="badge" id="today-date"></span></h2>
+  <div id="today-focus" class="notice">Loading today's focus...</div>
+  <div class="today-grid">
+    <div class="checkbox-row" data-key="vocab"><input type="checkbox" id="cb-vocab"><label for="cb-vocab">Anki vocab review (30 min)</label></div>
+    <div class="checkbox-row" data-key="quant"><input type="checkbox" id="cb-quant"><label for="cb-quant">TTP Quant block</label></div>
+    <div class="checkbox-row" data-key="verbal"><input type="checkbox" id="cb-verbal"><label for="cb-verbal">Verbal block (TC/SE/RC)</label></div>
+    <div class="checkbox-row" data-key="errors"><input type="checkbox" id="cb-errors"><label for="cb-errors">Logged today's wrong answers</label></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label>Hours studied today</label><input type="number" id="today-hours" min="0" max="12" step="0.25" placeholder="e.g. 2.5"></div>
+    <div class="form-group"><label>New vocab words today</label><input type="number" id="today-vocab" min="0" placeholder="e.g. 50"></div>
+    <div class="form-group" style="flex: 0 0 auto;"><label>&nbsp;</label><button onclick="saveToday()">Save Today</button></div>
+  </div>
+</div>
+
+<!-- TWO COLUMN: MOCKS + ERRORS -->
+<div class="row">
+  <!-- Mock Scores -->
+  <div class="card">
+    <h2>Mock Score Tracker <span class="badge" id="mock-count">0 mocks</span></h2>
+    <div class="chart-wrap"><canvas id="mock-chart"></canvas></div>
+    <div class="form-row">
+      <div class="form-group"><label>Date</label><input type="date" id="m-date"></div>
+      <div class="form-group"><label>Source</label>
+        <select id="m-source">
+          <option>PowerPrep Online 1</option>
+          <option>PowerPrep Online 2</option>
+          <option>PowerPrep Plus 1</option>
+          <option>PowerPrep Plus 2</option>
+          <option>PowerPrep Plus 3</option>
+          <option>TTP Mock</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Verbal</label><input type="number" id="m-v" min="130" max="170"></div>
+      <div class="form-group"><label>Quant</label><input type="number" id="m-q" min="130" max="170"></div>
+      <div class="form-group" style="flex: 0 0 auto;"><label>&nbsp;</label><button onclick="addMock()">Add</button></div>
+    </div>
+    <div style="margin-top: 12px; max-height: 200px; overflow-y: auto;">
+      <table><thead><tr><th>Date</th><th>Source</th><th>V</th><th>Q</th><th>Total</th><th></th></tr></thead><tbody id="mock-table"></tbody></table>
+    </div>
+  </div>
+
+  <!-- Error Log -->
+  <div class="card">
+    <h2>Error Log <span class="badge" id="error-count">0 entries</span></h2>
+    <div class="form-row">
+      <div class="form-group"><label>Section</label>
+        <select id="e-section"><option>Quant</option><option>Verbal</option></select>
+      </div>
+      <div class="form-group"><label>Topic</label><input type="text" id="e-topic" placeholder="e.g. Number Properties"></div>
+      <div class="form-group"><label>Why wrong</label>
+        <select id="e-reason"><option>Careless</option><option>Concept gap</option><option>Misread</option><option>Timing</option></select>
+      </div>
+      <div class="form-group" style="flex: 0 0 auto;"><label>&nbsp;</label><button onclick="addError()">Add</button></div>
+    </div>
+    <div style="margin-top: 12px; max-height: 280px; overflow-y: auto;">
+      <table><thead><tr><th>Date</th><th>Section</th><th>Topic</th><th>Reason</th><th></th></tr></thead><tbody id="error-table"></tbody></table>
+    </div>
+    <div id="error-summary" style="margin-top: 10px; font-size: 12px; color: #6b7280;"></div>
+  </div>
+</div>
+
+<!-- DAILY HOURS CHART -->
+<div class="card">
+  <h2>Daily Study Hours (last 21 days)</h2>
+  <div class="chart-wrap"><canvas id="hours-chart"></canvas></div>
+</div>
+
+<!-- WEEKLY PLAN -->
+<div class="card">
+  <h2>Weekly Plan & Topic Checklist</h2>
+  <div id="weekly-plan"></div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <button class="secondary" onclick="exportData()">Export Data</button>
+  <button class="secondary" onclick="document.getElementById('import-file').click()">Import Data</button>
+  <input type="file" id="import-file" style="display:none" accept=".json" onchange="importData(event)">
+  <button class="danger" onclick="confirmReset()">Reset All Data</button>
+</div>
+
+<script>
+// ============ CONFIG ============
+const PLAN_START = new Date("2026-05-11");
+const TEST_DATE = new Date("2026-06-26");
+
+const WEEKS = [
+  { num: 1, start: "2026-05-11", end: "2026-05-17", title: "Diagnostic + Foundations",
+    topics: ["Take Mock #1 (PowerPrep Online 1) — baseline", "TTP Diagnostic test", "TTP Arithmetic chapter", "TTP Number Properties chapter", "Anki: 300 vocab words seen", "GregMat: Text Completion (1-blank)", "Set up error log spreadsheet"]
+  },
+  { num: 2, start: "2026-05-18", end: "2026-05-24", title: "Algebra + RC Foundations",
+    topics: ["TTP Algebra chapters", "TTP Quantitative Comparison strategy", "GregMat: Reading Comprehension lessons", "GregMat: 2-blank TC", "Anki: 600 vocab words seen", "Solve 30+ Quant problems daily"]
+  },
+  { num: 3, start: "2026-05-25", end: "2026-05-31", title: "Word Problems + Geometry I",
+    topics: ["TTP Word Problems chapters", "TTP Geometry I (lines, angles, triangles)", "GregMat: 3-blank TC + hard SE", "Anki: 900 vocab words seen", "Mid-checkpoint: Manhattan timed Quant section Saturday"]
+  },
+  { num: 4, start: "2026-06-01", end: "2026-06-07", title: "Geometry II + Stats + Mock #2",
+    topics: ["TTP Geometry II (circles, polygons, coord geo, 3D)", "TTP Statistics chapter", "GregMat: hard RC practice (3 passages/day)", "Anki: 1200 vocab words seen", "MOCK #2: PowerPrep Plus 1 (Sun Jun 7) — target 305+"]
+  },
+  { num: 5, start: "2026-06-08", end: "2026-06-14", title: "DI + Probability + Verbal Hard",
+    topics: ["TTP Data Interpretation chapter", "TTP Probability + Combinatorics", "ETS Official Guide RC sets", "Anki: 1500 vocab words seen", "Quant retro: weakest topics, 30-q mixed sets"]
+  },
+  { num: 6, start: "2026-06-15", end: "2026-06-21", title: "Mock-Heavy + Targeted Drilling",
+    topics: ["MOCK #3: half-test (Wed Jun 17)", "MOCK #4: PowerPrep Plus 2 (Sat Jun 20) — target 318+", "Targeted weakness drilling (no new content)", "Vocab maintenance only", "ETS Official Guide RC only"]
+  },
+  { num: 7, start: "2026-06-22", end: "2026-06-28", title: "Taper + Test Day",
+    topics: ["Mon: Light review only — 30 min vocab + formula sheet", "Tue: Re-do 10 most-missed problems", "Wed: MOCK #5 PowerPrep Plus 3 (dress rehearsal)", "Thu: Rest, pack bag, no study after 6 PM", "FRI JUN 26: TEST DAY", "Sat–Sun: Off completely"]
+  }
+];
+
+// ============ STATE ============
+const KEY = "gre_dashboard_v1";
+let state = JSON.parse(localStorage.getItem(KEY) || "{}");
+state = {
+  dailyLogs: state.dailyLogs || {},      // {"YYYY-MM-DD": {hours, vocab, vocabBox, quantBox, verbalBox, errorsBox}}
+  mocks: state.mocks || [],              // [{id, date, source, v, q, total}]
+  errors: state.errors || [],            // [{id, date, section, topic, reason}]
+  topicProgress: state.topicProgress || {},  // {weekNum: {topicIdx: true}}
+  vocabTotal: state.vocabTotal || 0
+};
+function save() { localStorage.setItem(KEY, JSON.stringify(state)); }
+
+// ============ HELPERS ============
+function todayStr() {
+  const d = new Date();
+  return d.toISOString().split("T")[0];
+}
+function fmtDate(s) {
+  const d = new Date(s);
+  return d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+}
+function daysBetween(d1, d2) {
+  return Math.ceil((d2 - d1) / 86400000);
+}
+function currentWeek() {
+  const today = new Date();
+  for (const w of WEEKS) {
+    const start = new Date(w.start);
+    const end = new Date(w.end);
+    end.setHours(23, 59, 59);
+    if (today >= start && today <= end) return w.num;
+  }
+  if (today < new Date(WEEKS[0].start)) return 0;
+  return 8; // post-test
+}
+
+// ============ HEADER ============
+function renderHeader() {
+  const days = daysBetween(new Date(), TEST_DATE);
+  document.getElementById("countdown-days").textContent = days >= 0 ? days : "—";
+  const w = currentWeek();
+  document.getElementById("countdown-week").textContent = w === 0 ? "Plan starts May 11" : (w === 8 ? "Post-test" : `Week ${w} of 7`);
+
+  document.getElementById("today-date").textContent = fmtDate(todayStr());
+
+  const focus = w >= 1 && w <= 7
+    ? `<strong>Week ${w} focus:</strong> ${WEEKS[w-1].title}. Hit your TTP Quant block, log 50 vocab, and run the daily checklist below.`
+    : (w === 0 ? "Plan kicks off Monday May 11. Use this weekend to set up: subscribe to TTP, GregMat+, set up Anki with the GregMat 690 deck, and take Mock #1 (PowerPrep Online 1) Sunday morning." : "Test day is behind you. Time to celebrate.");
+  document.getElementById("today-focus").innerHTML = focus;
+}
+
+// ============ STATS ============
+function calcStreak() {
+  let streak = 0;
+  let d = new Date();
+  while (true) {
+    const key = d.toISOString().split("T")[0];
+    const log = state.dailyLogs[key];
+    if (!log || !log.hours || log.hours < 0.5) break;
+    streak++;
+    d.setDate(d.getDate() - 1);
+  }
+  return streak;
+}
+function totalHours() {
+  return Object.values(state.dailyLogs).reduce((a, l) => a + (parseFloat(l.hours) || 0), 0);
+}
+function renderStats() {
+  document.getElementById("stat-streak").textContent = calcStreak();
+  document.getElementById("stat-hours").textContent = totalHours().toFixed(1);
+  document.getElementById("stat-vocab").textContent = state.vocabTotal;
+  const latest = state.mocks.length ? state.mocks[state.mocks.length - 1].total : "—";
+  document.getElementById("stat-mock").textContent = latest;
+}
+
+// ============ TODAY ============
+function loadToday() {
+  const log = state.dailyLogs[todayStr()] || {};
+  document.getElementById("today-hours").value = log.hours || "";
+  document.getElementById("today-vocab").value = log.vocab || "";
+  ["vocab","quant","verbal","errors"].forEach(k => {
+    const cb = document.getElementById("cb-" + k);
+    cb.checked = !!log[k + "Box"];
+    cb.parentElement.classList.toggle("done", cb.checked);
+  });
+}
+function saveToday() {
+  const key = todayStr();
+  const prev = state.dailyLogs[key] || {};
+  const newVocab = parseInt(document.getElementById("today-vocab").value) || 0;
+  const oldVocab = parseInt(prev.vocab) || 0;
+  state.dailyLogs[key] = {
+    hours: parseFloat(document.getElementById("today-hours").value) || 0,
+    vocab: newVocab,
+    vocabBox: document.getElementById("cb-vocab").checked,
+    quantBox: document.getElementById("cb-quant").checked,
+    verbalBox: document.getElementById("cb-verbal").checked,
+    errorsBox: document.getElementById("cb-errors").checked,
+  };
+  state.vocabTotal += (newVocab - oldVocab);
+  if (state.vocabTotal < 0) state.vocabTotal = 0;
+  save();
+  renderAll();
+  flash("Today saved");
+}
+
+// ============ MOCKS ============
+function addMock() {
+  const date = document.getElementById("m-date").value;
+  const source = document.getElementById("m-source").value;
+  const v = parseInt(document.getElementById("m-v").value);
+  const q = parseInt(document.getElementById("m-q").value);
+  if (!date || !v || !q) { alert("Fill date, Verbal, and Quant scores"); return; }
+  if (v < 130 || v > 170 || q < 130 || q > 170) { alert("Scores must be 130–170"); return; }
+  state.mocks.push({ id: Date.now(), date, source, v, q, total: v + q });
+  state.mocks.sort((a, b) => a.date.localeCompare(b.date));
+  document.getElementById("m-v").value = "";
+  document.getElementById("m-q").value = "";
+  save();
+  renderAll();
+}
+function delMock(id) {
+  state.mocks = state.mocks.filter(m => m.id !== id);
+  save();
+  renderAll();
+}
+function scoreClass(t) {
+  if (t >= 320) return "score-good";
+  if (t >= 305) return "score-ok";
+  return "score-low";
+}
+function renderMocks() {
+  document.getElementById("mock-count").textContent = state.mocks.length + " mock" + (state.mocks.length === 1 ? "" : "s");
+  const tbody = document.getElementById("mock-table");
+  if (!state.mocks.length) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty">No mocks yet. Take Mock #1 on May 11!</td></tr>';
+    return;
+  }
+  tbody.innerHTML = state.mocks.map(m => `
+    <tr>
+      <td>${fmtDate(m.date)}</td>
+      <td>${m.source}</td>
+      <td>${m.v}</td>
+      <td>${m.q}</td>
+      <td><span class="score-badge ${scoreClass(m.total)}">${m.total}</span></td>
+      <td><button class="small secondary" onclick="delMock(${m.id})">×</button></td>
+    </tr>
+  `).join("");
+}
+let mockChart = null;
+function renderMockChart() {
+  const ctx = document.getElementById("mock-chart").getContext("2d");
+  if (mockChart) mockChart.destroy();
+  const labels = state.mocks.map(m => fmtDate(m.date));
+  const totals = state.mocks.map(m => m.total);
+  const verbal = state.mocks.map(m => m.v);
+  const quant = state.mocks.map(m => m.q);
+  mockChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels,
+      datasets: [
+        { label: "Total", data: totals, borderColor: "#1F4E79", backgroundColor: "rgba(31,78,121,0.1)", tension: 0.3, fill: true, yAxisID: "y" },
+        { label: "Verbal", data: verbal, borderColor: "#059669", tension: 0.3, yAxisID: "y2", borderDash: [5,5] },
+        { label: "Quant", data: quant, borderColor: "#dc2626", tension: 0.3, yAxisID: "y2", borderDash: [5,5] },
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: {
+        y: { position: "left", min: 260, max: 340, title: { display: true, text: "Total" } },
+        y2: { position: "right", min: 130, max: 170, title: { display: true, text: "Section" }, grid: { drawOnChartArea: false } }
+      },
+      plugins: {
+        legend: { position: "top", labels: { boxWidth: 12, font: { size: 11 } } },
+        annotation: false
+      }
+    }
+  });
+}
+
+// ============ ERRORS ============
+function addError() {
+  const section = document.getElementById("e-section").value;
+  const topic = document.getElementById("e-topic").value.trim();
+  const reason = document.getElementById("e-reason").value;
+  if (!topic) { alert("Add a topic"); return; }
+  state.errors.unshift({ id: Date.now(), date: todayStr(), section, topic, reason });
+  document.getElementById("e-topic").value = "";
+  save();
+  renderErrors();
+}
+function delError(id) {
+  state.errors = state.errors.filter(e => e.id !== id);
+  save();
+  renderErrors();
+}
+function renderErrors() {
+  document.getElementById("error-count").textContent = state.errors.length + " entries";
+  const tbody = document.getElementById("error-table");
+  if (!state.errors.length) {
+    tbody.innerHTML = '<tr><td colspan="5" class="empty">No errors logged yet.</td></tr>';
+    document.getElementById("error-summary").textContent = "";
+    return;
+  }
+  tbody.innerHTML = state.errors.slice(0, 50).map(e => `
+    <tr>
+      <td>${fmtDate(e.date)}</td>
+      <td>${e.section}</td>
+      <td>${e.topic}</td>
+      <td>${e.reason}</td>
+      <td><button class="small secondary" onclick="delError(${e.id})">×</button></td>
+    </tr>
+  `).join("");
+
+  // summary by reason
+  const byReason = {};
+  state.errors.forEach(e => byReason[e.reason] = (byReason[e.reason] || 0) + 1);
+  const total = state.errors.length;
+  const careless = ((byReason["Careless"] || 0) / total * 100).toFixed(0);
+  document.getElementById("error-summary").innerHTML = `Total <strong>${total}</strong> &middot; ${Object.entries(byReason).map(([k,v]) => `${k}: ${v}`).join(" &middot; ")} ${careless > 30 ? "<span style='color:#dc2626;font-weight:600'>⚠ Careless > 30% — slow down on first 5 questions of each section</span>" : ""}`;
+}
+
+// ============ DAILY HOURS CHART ============
+let hoursChart = null;
+function renderHoursChart() {
+  const ctx = document.getElementById("hours-chart").getContext("2d");
+  if (hoursChart) hoursChart.destroy();
+  const labels = [], data = [];
+  for (let i = 20; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const k = d.toISOString().split("T")[0];
+    labels.push(d.toLocaleDateString("en-US", { month: "short", day: "numeric" }));
+    data.push(state.dailyLogs[k]?.hours || 0);
+  }
+  const targets = data.map((_, i) => {
+    const dow = new Date(); dow.setDate(dow.getDate() - (20 - i));
+    const day = dow.getDay(); // 0=Sun, 6=Sat
+    if (day === 2 || day === 4) return 2;     // Tue/Thu = 2
+    if (day === 0 || day === 6) return 4;     // Sat/Sun = 4
+    return 3;                                  // Mon/Wed/Fri = 3
+  });
+  hoursChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [
+        { label: "Hours studied", data, backgroundColor: data.map(v => v >= 1 ? "#1F4E79" : "#e5e7eb"), borderRadius: 4 },
+        { label: "Target", data: targets, type: "line", borderColor: "#dc2626", borderDash: [5,5], pointRadius: 0, fill: false, tension: 0 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: { y: { beginAtZero: true, max: 6, title: { display: true, text: "Hours" } } },
+      plugins: { legend: { position: "top", labels: { boxWidth: 12, font: { size: 11 } } } }
+    }
+  });
+}
+
+// ============ WEEKLY PLAN ============
+function toggleTopic(weekNum, topicIdx) {
+  state.topicProgress[weekNum] = state.topicProgress[weekNum] || {};
+  state.topicProgress[weekNum][topicIdx] = !state.topicProgress[weekNum][topicIdx];
+  save();
+  renderWeeks();
+}
+function toggleWeekBody(num) {
+  document.querySelectorAll(".week-body").forEach(b => {
+    if (b.dataset.week == num) b.classList.toggle("show");
+  });
+}
+function renderWeeks() {
+  const cw = currentWeek();
+  const html = WEEKS.map(w => {
+    const progress = state.topicProgress[w.num] || {};
+    const done = w.topics.filter((_, i) => progress[i]).length;
+    const total = w.topics.length;
+    const isCurrent = w.num === cw;
+    const headerClass = isCurrent ? "current" : "";
+    const bodyShow = isCurrent ? "show" : "";
+    const topicsHtml = w.topics.map((t, i) => `
+      <div class="checkbox-row ${progress[i] ? "done" : ""}" onclick="toggleTopic(${w.num}, ${i})">
+        <input type="checkbox" ${progress[i] ? "checked" : ""} onclick="event.stopPropagation()">
+        <label>${t}</label>
+      </div>`).join("");
+    return `
+      <div class="week">
+        <div class="week-header ${headerClass}" onclick="toggleWeekBody(${w.num})">
+          <span>Week ${w.num} &middot; ${fmtDate(w.start)}–${fmtDate(w.end)} &middot; ${w.title}</span>
+          <span class="week-progress">${done}/${total}</span>
+        </div>
+        <div class="week-body ${bodyShow}" data-week="${w.num}">${topicsHtml}</div>
+      </div>`;
+  }).join("");
+  document.getElementById("weekly-plan").innerHTML = html;
+}
+
+// ============ FOOTER ============
+function exportData() {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `gre-dashboard-${todayStr()}.json`;
+  a.click();
+}
+function importData(ev) {
+  const file = ev.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const imported = JSON.parse(e.target.result);
+      if (!imported.dailyLogs) throw new Error("Invalid file");
+      state = imported;
+      save();
+      renderAll();
+      flash("Data imported");
+    } catch (err) {
+      alert("Could not import: " + err.message);
+    }
+  };
+  reader.readAsText(file);
+}
+function confirmReset() {
+  if (confirm("Wipe ALL dashboard data? This cannot be undone.")) {
+    localStorage.removeItem(KEY);
+    location.reload();
+  }
+}
+function flash(msg) {
+  const el = document.createElement("div");
+  el.textContent = msg;
+  el.style.cssText = "position:fixed;bottom:20px;right:20px;background:#059669;color:white;padding:10px 16px;border-radius:6px;font-size:14px;z-index:1000;box-shadow:0 4px 12px rgba(0,0,0,0.15);";
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 2000);
+}
+
+// ============ CHECKBOX HANDLER ============
+document.querySelectorAll(".checkbox-row[data-key] input").forEach(cb => {
+  cb.addEventListener("change", () => {
+    cb.parentElement.classList.toggle("done", cb.checked);
+  });
+});
+
+// ============ INIT ============
+function renderAll() {
+  renderHeader();
+  renderStats();
+  renderMocks();
+  renderMockChart();
+  renderErrors();
+  renderHoursChart();
+  renderWeeks();
+}
+
+// Set today's date as default for mock form
+document.getElementById("m-date").value = todayStr();
+loadToday();
+renderAll();
+</script>
+</body>
+</html>
