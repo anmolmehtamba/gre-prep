@@ -312,6 +312,80 @@ tr:hover { background: #f9fafb; }
 
 /* ---------- Chart container ---------- */
 .chart-wrap { position: relative; height: 240px; }
+
+/* ---------- Formula Practice ---------- */
+.fp-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+.fp-tab { padding: 8px 16px; background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; user-select: none; }
+.fp-tab.active { background: #1F4E79; color: white; border-color: #1F4E79; }
+.fp-pane { display: none; }
+.fp-pane.active { display: block; }
+
+.fc-card { perspective: 1200px; height: 200px; cursor: pointer; margin-bottom: 14px; }
+.fc-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.55s cubic-bezier(0.4, 0.0, 0.2, 1); }
+.fc-card.flipped .fc-inner { transform: rotateY(180deg); }
+.fc-front, .fc-back { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: flex; align-items: center; justify-content: center; padding: 28px; border-radius: 12px; text-align: center; font-size: 17px; font-weight: 500; line-height: 1.5; box-shadow: 0 4px 14px rgba(31, 78, 121, 0.12); }
+.fc-front { background: linear-gradient(135deg, #1F4E79 0%, #2563eb 100%); color: white; }
+.fc-back { background: white; border: 2px solid #1F4E79; color: #1F4E79; transform: rotateY(180deg); }
+.fc-cat { position: absolute; top: 10px; left: 14px; font-size: 10px; opacity: 0.85; text-transform: uppercase; letter-spacing: 0.07em; font-weight: 600; }
+.fc-status { position: absolute; top: 10px; right: 14px; font-size: 11px; padding: 2px 8px; border-radius: 999px; font-weight: 600; }
+.fc-status.known { background: #d1fae5; color: #065f46; }
+.fc-status.review { background: #fee2e2; color: #991b1b; }
+.fc-flip-hint { position: absolute; bottom: 10px; right: 14px; font-size: 11px; opacity: 0.65; }
+.fc-controls { display: flex; gap: 8px; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+.fc-controls > div { display: flex; gap: 8px; }
+.fc-progress { font-size: 13px; color: #6b7280; font-weight: 500; }
+.fc-empty { text-align: center; padding: 40px 20px; color: #9ca3af; font-style: italic; }
+
+.q-card { padding: 18px; background: #f9fafb; border-radius: 10px; margin-bottom: 12px; border: 1px solid #e5e7eb; }
+.q-question { font-size: 15px; font-weight: 600; margin-bottom: 14px; line-height: 1.5; }
+.q-option { padding: 11px 14px; background: white; border: 1px solid #e5e7eb; border-radius: 6px; cursor: pointer; margin-bottom: 7px; font-size: 14px; transition: all 0.15s; user-select: none; }
+.q-option:hover { background: #f3f4f6; border-color: #cbd5e1; }
+.q-option.correct { background: #d1fae5; border-color: #10b981; color: #065f46; font-weight: 500; }
+.q-option.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+.q-option.disabled { pointer-events: none; }
+.q-progress-bar { height: 6px; background: #e5e7eb; border-radius: 3px; margin-bottom: 16px; overflow: hidden; }
+.q-progress-fill { height: 100%; background: linear-gradient(90deg, #1F4E79, #2563eb); transition: width 0.3s; }
+.q-explain { font-size: 13px; color: #475569; margin-top: 10px; padding: 10px; background: white; border-left: 3px solid #1F4E79; border-radius: 4px; }
+
+/* ---------- Quick Reference ---------- */
+.qr-tabs { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+.qr-tab { padding: 7px 14px; background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 500; user-select: none; }
+.qr-tab.active { background: #1F4E79; color: white; border-color: #1F4E79; }
+.qr-pane { display: none; }
+.qr-pane.active { display: block; }
+.qr-pane h3 { font-size: 13px; color: #1F4E79; font-weight: 700; margin: 18px 0 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+.qr-pane h3:first-child { margin-top: 4px; }
+.qr-pane h4 { font-size: 12px; color: #475569; font-weight: 600; margin: 14px 0 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+
+.ref-grid { display: grid; gap: 6px; font-size: 13px; }
+.ref-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+.ref-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+.ref-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.ref-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.ref-cell { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 5px; padding: 7px 9px; font-variant-numeric: tabular-nums; }
+.ref-cell .lbl { color: #6b7280; font-size: 11px; }
+.ref-cell .val { color: #1F4E79; font-weight: 600; }
+.ref-cell.highlight { background: #DCE6F1; border-color: #1F4E79; }
+@media (max-width: 800px) {
+  .ref-grid.cols-5 { grid-template-columns: repeat(3, 1fr); }
+  .ref-grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+.mult-table { width: 100%; border-collapse: collapse; font-size: 12px; font-variant-numeric: tabular-nums; }
+.mult-table th, .mult-table td { padding: 5px 4px; text-align: center; border: 1px solid #e5e7eb; }
+.mult-table th { background: #1F4E79; color: white; font-weight: 600; font-size: 11px; }
+.mult-table tr:first-child td:first-child, .mult-table td.row-head { background: #1F4E79; color: white; font-weight: 600; }
+.mult-table td.diag { background: #DCE6F1; color: #1F4E79; font-weight: 700; }
+
+.tip-box { background: #fffbeb; border-left: 3px solid #f59e0b; padding: 10px 14px; border-radius: 4px; font-size: 13px; margin: 10px 0; line-height: 1.6; }
+.tip-box strong { color: #92400e; }
+.tip-box code { background: white; padding: 1px 6px; border-radius: 3px; font-size: 12px; color: #1F4E79; font-weight: 600; }
+
+.verbal-roots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; font-size: 12px; }
+@media (max-width: 800px) { .verbal-roots { grid-template-columns: repeat(2, 1fr); } }
+.verbal-roots .ref-cell { padding: 6px 8px; }
+.verbal-roots .lbl { font-weight: 700; color: #1F4E79; }
+
 </style>
 </head>
 <body>
@@ -408,6 +482,413 @@ tr:hover { background: #f9fafb; }
   <div class="chart-wrap"><canvas id="hours-chart"></canvas></div>
 </div>
 
+<!-- QUICK REFERENCE SHEET -->
+<div class="card">
+  <h2>Quick Reference Sheet <span class="badge">Memorize cold</span></h2>
+  <div class="qr-tabs">
+    <div class="qr-tab active" onclick="switchQrTab('numbers')">Numbers</div>
+    <div class="qr-tab" onclick="switchQrTab('mult')">Multiplication</div>
+    <div class="qr-tab" onclick="switchQrTab('frac')">Fractions / %</div>
+    <div class="qr-tab" onclick="switchQrTab('geom')">Geometry</div>
+    <div class="qr-tab" onclick="switchQrTab('quanttips')">Quant Tricks</div>
+    <div class="qr-tab" onclick="switchQrTab('verbal')">Verbal Tips</div>
+  </div>
+
+  <!-- NUMBERS PANE -->
+  <div class="qr-pane active" id="qr-numbers">
+    <h3>Squares (1²–25²)</h3>
+    <div class="ref-grid cols-5" id="qr-squares"></div>
+
+    <h3>Cubes (1³–12³)</h3>
+    <div class="ref-grid cols-4" id="qr-cubes"></div>
+
+    <h3>Square Roots (decimal approximations)</h3>
+    <div class="ref-grid cols-4">
+      <div class="ref-cell highlight"><div class="lbl">√2</div><div class="val">≈ 1.414</div></div>
+      <div class="ref-cell highlight"><div class="lbl">√3</div><div class="val">≈ 1.732</div></div>
+      <div class="ref-cell"><div class="lbl">√5</div><div class="val">≈ 2.236</div></div>
+      <div class="ref-cell"><div class="lbl">√6</div><div class="val">≈ 2.449</div></div>
+      <div class="ref-cell"><div class="lbl">√7</div><div class="val">≈ 2.646</div></div>
+      <div class="ref-cell"><div class="lbl">√8</div><div class="val">≈ 2.828</div></div>
+      <div class="ref-cell"><div class="lbl">√10</div><div class="val">≈ 3.162</div></div>
+      <div class="ref-cell"><div class="lbl">√11</div><div class="val">≈ 3.317</div></div>
+      <div class="ref-cell"><div class="lbl">√13</div><div class="val">≈ 3.606</div></div>
+      <div class="ref-cell"><div class="lbl">√15</div><div class="val">≈ 3.873</div></div>
+      <div class="ref-cell"><div class="lbl">√17</div><div class="val">≈ 4.123</div></div>
+      <div class="ref-cell"><div class="lbl">√19</div><div class="val">≈ 4.359</div></div>
+    </div>
+
+    <h3>Powers of 2</h3>
+    <div class="ref-grid cols-5" id="qr-pow2"></div>
+
+    <h3>Powers of 3, 4, 5</h3>
+    <div class="ref-grid cols-3">
+      <div class="ref-cell"><div class="lbl">3¹–3⁸</div><div class="val">3, 9, 27, 81, 243, 729, 2187, 6561</div></div>
+      <div class="ref-cell"><div class="lbl">4¹–4⁶</div><div class="val">4, 16, 64, 256, 1024, 4096</div></div>
+      <div class="ref-cell"><div class="lbl">5¹–5⁵</div><div class="val">5, 25, 125, 625, 3125</div></div>
+    </div>
+
+    <h3>Primes (under 100)</h3>
+    <div class="tip-box"><strong>2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97</strong> — that's 25 primes. Memorize them — divisibility & factor questions hinge on instant recognition.</div>
+  </div>
+
+  <!-- MULTIPLICATION PANE -->
+  <div class="qr-pane" id="qr-mult">
+    <h3>Multiplication Table 1–15</h3>
+    <div style="overflow-x:auto;">
+      <table class="mult-table" id="qr-mtable"></table>
+    </div>
+
+    <h3>"Tricky" Multiplications Worth Memorizing</h3>
+    <div class="ref-grid cols-4">
+      <div class="ref-cell"><div class="lbl">12 × 12</div><div class="val">144</div></div>
+      <div class="ref-cell"><div class="lbl">12 × 13</div><div class="val">156</div></div>
+      <div class="ref-cell"><div class="lbl">12 × 14</div><div class="val">168</div></div>
+      <div class="ref-cell"><div class="lbl">13 × 13</div><div class="val">169</div></div>
+      <div class="ref-cell"><div class="lbl">13 × 14</div><div class="val">182</div></div>
+      <div class="ref-cell"><div class="lbl">14 × 14</div><div class="val">196</div></div>
+      <div class="ref-cell"><div class="lbl">14 × 16</div><div class="val">224</div></div>
+      <div class="ref-cell"><div class="lbl">15 × 15</div><div class="val">225</div></div>
+      <div class="ref-cell"><div class="lbl">16 × 16</div><div class="val">256</div></div>
+      <div class="ref-cell"><div class="lbl">16 × 17</div><div class="val">272</div></div>
+      <div class="ref-cell"><div class="lbl">17 × 17</div><div class="val">289</div></div>
+      <div class="ref-cell"><div class="lbl">18 × 18</div><div class="val">324</div></div>
+      <div class="ref-cell"><div class="lbl">19 × 19</div><div class="val">361</div></div>
+      <div class="ref-cell"><div class="lbl">20 × 20</div><div class="val">400</div></div>
+      <div class="ref-cell"><div class="lbl">25 × 25</div><div class="val">625</div></div>
+      <div class="ref-cell"><div class="lbl">50 × 50</div><div class="val">2,500</div></div>
+    </div>
+
+    <h3>Mental Math Shortcuts</h3>
+    <div class="tip-box"><strong>× 25 trick:</strong> divide the other number by 4, then multiply by 100. Ex: <code>32 × 25</code> → 32/4 = 8 → 800.</div>
+    <div class="tip-box"><strong>× 11 (2-digit) trick:</strong> for AB × 11, write A then (A+B) then B. Ex: <code>23 × 11</code> → 2(2+3)3 = <code>253</code>. If A+B ≥ 10, carry over.</div>
+    <div class="tip-box"><strong>Squaring numbers ending in 5:</strong> take the digit before 5, multiply by (digit + 1), append "25". Ex: <code>35²</code> → 3 × 4 = 12 → <code>1225</code>. <code>65²</code> → 6 × 7 = 42 → <code>4225</code>.</div>
+    <div class="tip-box"><strong>× 5 trick:</strong> divide by 2 and multiply by 10. Ex: <code>86 × 5</code> → 43 × 10 = 430.</div>
+    <div class="tip-box"><strong>× 9 trick:</strong> multiply by 10 and subtract the original. Ex: <code>17 × 9</code> → 170 − 17 = 153.</div>
+  </div>
+
+  <!-- FRACTIONS / % PANE -->
+  <div class="qr-pane" id="qr-frac">
+    <h3>Fraction → Decimal → Percent</h3>
+    <div class="ref-grid cols-3">
+      <div class="ref-cell"><div class="lbl">1/2</div><div class="val">0.5  =  50%</div></div>
+      <div class="ref-cell"><div class="lbl">1/3</div><div class="val">0.333…  ≈ 33.33%</div></div>
+      <div class="ref-cell"><div class="lbl">2/3</div><div class="val">0.666…  ≈ 66.67%</div></div>
+      <div class="ref-cell"><div class="lbl">1/4</div><div class="val">0.25  =  25%</div></div>
+      <div class="ref-cell"><div class="lbl">3/4</div><div class="val">0.75  =  75%</div></div>
+      <div class="ref-cell"><div class="lbl">1/5</div><div class="val">0.2  =  20%</div></div>
+      <div class="ref-cell"><div class="lbl">2/5</div><div class="val">0.4  =  40%</div></div>
+      <div class="ref-cell"><div class="lbl">3/5</div><div class="val">0.6  =  60%</div></div>
+      <div class="ref-cell"><div class="lbl">4/5</div><div class="val">0.8  =  80%</div></div>
+      <div class="ref-cell"><div class="lbl">1/6</div><div class="val">0.166…  ≈ 16.67%</div></div>
+      <div class="ref-cell"><div class="lbl">5/6</div><div class="val">0.833…  ≈ 83.33%</div></div>
+      <div class="ref-cell"><div class="lbl">1/7</div><div class="val">0.1428…  ≈ 14.29%</div></div>
+      <div class="ref-cell"><div class="lbl">1/8</div><div class="val">0.125  =  12.5%</div></div>
+      <div class="ref-cell"><div class="lbl">3/8</div><div class="val">0.375  =  37.5%</div></div>
+      <div class="ref-cell"><div class="lbl">5/8</div><div class="val">0.625  =  62.5%</div></div>
+      <div class="ref-cell"><div class="lbl">7/8</div><div class="val">0.875  =  87.5%</div></div>
+      <div class="ref-cell"><div class="lbl">1/9</div><div class="val">0.111…  ≈ 11.11%</div></div>
+      <div class="ref-cell"><div class="lbl">1/10</div><div class="val">0.1  =  10%</div></div>
+      <div class="ref-cell"><div class="lbl">1/11</div><div class="val">0.0909…  ≈ 9.09%</div></div>
+      <div class="ref-cell"><div class="lbl">1/12</div><div class="val">0.0833…  ≈ 8.33%</div></div>
+      <div class="ref-cell"><div class="lbl">1/16</div><div class="val">0.0625  =  6.25%</div></div>
+      <div class="ref-cell"><div class="lbl">1/20</div><div class="val">0.05  =  5%</div></div>
+      <div class="ref-cell"><div class="lbl">1/25</div><div class="val">0.04  =  4%</div></div>
+      <div class="ref-cell"><div class="lbl">1/50</div><div class="val">0.02  =  2%</div></div>
+    </div>
+
+    <h3>Percent Formulas</h3>
+    <div class="tip-box"><strong>Percent change:</strong> <code>(New − Old) / Old × 100</code></div>
+    <div class="tip-box"><strong>Percent of:</strong> <code>X% of N = (X/100) × N</code></div>
+    <div class="tip-box"><strong>Successive % changes:</strong> +X% then +Y% → multiply by <code>(1+X/100)(1+Y/100)</code>. Ex: +20% then −20% ≠ 0% — it's <code>1.2 × 0.8 = 0.96</code> → −4%.</div>
+    <div class="tip-box"><strong>"What % is A of B?"</strong> → <code>A/B × 100</code></div>
+  </div>
+
+  <!-- GEOMETRY PANE -->
+  <div class="qr-pane" id="qr-geom">
+    <h3>Triangles</h3>
+    <div class="ref-grid cols-2">
+      <div class="ref-cell"><div class="lbl">Area (general)</div><div class="val">½ × base × height</div></div>
+      <div class="ref-cell"><div class="lbl">Area (equilateral)</div><div class="val">(√3 / 4) × side²</div></div>
+      <div class="ref-cell"><div class="lbl">Sum of interior angles</div><div class="val">180°</div></div>
+      <div class="ref-cell"><div class="lbl">Heron's formula</div><div class="val">√[s(s−a)(s−b)(s−c)],  s = (a+b+c)/2</div></div>
+    </div>
+
+    <h4>Special Right Triangles</h4>
+    <div class="ref-grid cols-2">
+      <div class="ref-cell highlight"><div class="lbl">45-45-90</div><div class="val">sides ratio  1 : 1 : √2</div></div>
+      <div class="ref-cell highlight"><div class="lbl">30-60-90</div><div class="val">sides ratio  1 : √3 : 2</div></div>
+    </div>
+
+    <h4>Pythagorean Triples (memorize)</h4>
+    <div class="ref-grid cols-4">
+      <div class="ref-cell"><div class="val">3-4-5</div></div>
+      <div class="ref-cell"><div class="val">5-12-13</div></div>
+      <div class="ref-cell"><div class="val">8-15-17</div></div>
+      <div class="ref-cell"><div class="val">7-24-25</div></div>
+      <div class="ref-cell"><div class="val">9-40-41</div></div>
+      <div class="ref-cell"><div class="val">6-8-10</div></div>
+      <div class="ref-cell"><div class="val">9-12-15</div></div>
+      <div class="ref-cell"><div class="val">10-24-26</div></div>
+    </div>
+
+    <h3>Circles</h3>
+    <div class="ref-grid cols-2">
+      <div class="ref-cell"><div class="lbl">Area</div><div class="val">π r²</div></div>
+      <div class="ref-cell"><div class="lbl">Circumference</div><div class="val">2π r  =  π d</div></div>
+      <div class="ref-cell"><div class="lbl">Arc length</div><div class="val">(θ / 360) × 2πr</div></div>
+      <div class="ref-cell"><div class="lbl">Sector area</div><div class="val">(θ / 360) × π r²</div></div>
+      <div class="ref-cell"><div class="lbl">Inscribed angle</div><div class="val">½ × central angle</div></div>
+      <div class="ref-cell"><div class="lbl">π</div><div class="val">≈ 3.14159   (or 22/7)</div></div>
+    </div>
+
+    <h3>Polygons</h3>
+    <div class="ref-grid cols-2">
+      <div class="ref-cell"><div class="lbl">Sum of interior angles</div><div class="val">(n − 2) × 180°</div></div>
+      <div class="ref-cell"><div class="lbl">Each angle (regular polygon)</div><div class="val">(n − 2) × 180° / n</div></div>
+      <div class="ref-cell"><div class="lbl">Sum of exterior angles</div><div class="val">360°  (any polygon)</div></div>
+      <div class="ref-cell"><div class="lbl">Square diagonal (side s)</div><div class="val">s √2</div></div>
+      <div class="ref-cell"><div class="lbl">Rectangle area</div><div class="val">L × W</div></div>
+      <div class="ref-cell"><div class="lbl">Parallelogram area</div><div class="val">base × height</div></div>
+      <div class="ref-cell"><div class="lbl">Trapezoid area</div><div class="val">½ × (b₁ + b₂) × h</div></div>
+      <div class="ref-cell"><div class="lbl">Rhombus area</div><div class="val">½ × d₁ × d₂</div></div>
+    </div>
+
+    <h3>Solids (3D)</h3>
+    <div class="ref-grid cols-2">
+      <div class="ref-cell"><div class="lbl">Cube — surface area</div><div class="val">6 s²</div></div>
+      <div class="ref-cell"><div class="lbl">Cube — volume</div><div class="val">s³</div></div>
+      <div class="ref-cell"><div class="lbl">Cube — diagonal</div><div class="val">s √3</div></div>
+      <div class="ref-cell"><div class="lbl">Rectangular solid — volume</div><div class="val">L × W × H</div></div>
+      <div class="ref-cell"><div class="lbl">Rectangular solid — diagonal</div><div class="val">√(L² + W² + H²)</div></div>
+      <div class="ref-cell"><div class="lbl">Cylinder — volume</div><div class="val">π r² h</div></div>
+      <div class="ref-cell"><div class="lbl">Cylinder — surface area</div><div class="val">2π r² + 2π r h</div></div>
+      <div class="ref-cell"><div class="lbl">Sphere — volume</div><div class="val">(4/3) π r³</div></div>
+      <div class="ref-cell"><div class="lbl">Sphere — surface area</div><div class="val">4 π r²</div></div>
+      <div class="ref-cell"><div class="lbl">Cone — volume</div><div class="val">(1/3) π r² h</div></div>
+    </div>
+
+    <h3>Coordinate Geometry</h3>
+    <div class="ref-grid cols-2">
+      <div class="ref-cell"><div class="lbl">Distance between points</div><div class="val">√[(x₂−x₁)² + (y₂−y₁)²]</div></div>
+      <div class="ref-cell"><div class="lbl">Midpoint</div><div class="val">((x₁+x₂)/2, (y₁+y₂)/2)</div></div>
+      <div class="ref-cell"><div class="lbl">Slope</div><div class="val">(y₂−y₁) / (x₂−x₁)</div></div>
+      <div class="ref-cell"><div class="lbl">Slope-intercept form</div><div class="val">y = mx + b</div></div>
+      <div class="ref-cell"><div class="lbl">Parallel lines</div><div class="val">slopes equal:  m₁ = m₂</div></div>
+      <div class="ref-cell"><div class="lbl">Perpendicular lines</div><div class="val">m₁ × m₂ = −1</div></div>
+    </div>
+  </div>
+
+  <!-- QUANT TRICKS PANE -->
+  <div class="qr-pane" id="qr-quanttips">
+    <h3>Statistics — Quick Rules</h3>
+    <div class="ref-grid cols-2">
+      <div class="ref-cell"><div class="lbl">Mean</div><div class="val">sum / count</div></div>
+      <div class="ref-cell"><div class="lbl">Median</div><div class="val">middle value (sorted)</div></div>
+      <div class="ref-cell"><div class="lbl">Mode</div><div class="val">most frequent value</div></div>
+      <div class="ref-cell"><div class="lbl">Range</div><div class="val">max − min</div></div>
+      <div class="ref-cell"><div class="lbl">Weighted average</div><div class="val">Σ(value × weight) / Σ(weights)</div></div>
+      <div class="ref-cell"><div class="lbl">Empirical rule (normal)</div><div class="val">68% within 1σ, 95% within 2σ, 99.7% within 3σ</div></div>
+    </div>
+
+    <h3>Top Quant Tactics</h3>
+    <div class="tip-box"><strong>Plug in numbers</strong> for variables (try 2, 3, 5, 10, and a fraction like 1/2). Especially useful for Quantitative Comparison and "must be true" questions.</div>
+    <div class="tip-box"><strong>Back-solve from answer choices</strong> — start with choice C (middle value). If too high, try B/A; too low, try D/E. Saves time on word problems.</div>
+    <div class="tip-box"><strong>For QC: pick smart numbers.</strong> Test with 0, 1, −1, fractions (½), and large numbers. If results differ → answer is D (cannot be determined).</div>
+    <div class="tip-box"><strong>Estimate aggressively.</strong> Many GRE answers differ by 20%+. Round and approximate before committing to long arithmetic.</div>
+    <div class="tip-box"><strong>Two-pass strategy:</strong> Pass 1 — solve all in &lt;90 sec. Pass 2 — return to flagged. NEVER let one question eat 3+ minutes.</div>
+    <div class="tip-box"><strong>Section-adaptive:</strong> First 5 questions of each section weight more. Spend extra 10–15 sec confirming each.</div>
+    <div class="tip-box"><strong>Watch for "must" vs "could":</strong> "Must be true" → find a counter-example to eliminate. "Could be true" → only need one valid case.</div>
+    <div class="tip-box"><strong>Units conversion:</strong> always check feet/inches, hours/minutes, $/cents before answering rate problems.</div>
+
+    <h3>Common Algebra Identities</h3>
+    <div class="ref-grid cols-2">
+      <div class="ref-cell"><div class="lbl">(a + b)²</div><div class="val">a² + 2ab + b²</div></div>
+      <div class="ref-cell"><div class="lbl">(a − b)²</div><div class="val">a² − 2ab + b²</div></div>
+      <div class="ref-cell"><div class="lbl">a² − b²</div><div class="val">(a − b)(a + b)</div></div>
+      <div class="ref-cell"><div class="lbl">(a + b)³</div><div class="val">a³ + 3a²b + 3ab² + b³</div></div>
+      <div class="ref-cell"><div class="lbl">a³ + b³</div><div class="val">(a + b)(a² − ab + b²)</div></div>
+      <div class="ref-cell"><div class="lbl">a³ − b³</div><div class="val">(a − b)(a² + ab + b²)</div></div>
+    </div>
+
+    <h3>Exponent Rules</h3>
+    <div class="ref-grid cols-2">
+      <div class="ref-cell"><div class="lbl">aᵐ × aⁿ</div><div class="val">aᵐ⁺ⁿ</div></div>
+      <div class="ref-cell"><div class="lbl">aᵐ ÷ aⁿ</div><div class="val">aᵐ⁻ⁿ</div></div>
+      <div class="ref-cell"><div class="lbl">(aᵐ)ⁿ</div><div class="val">aᵐⁿ</div></div>
+      <div class="ref-cell"><div class="lbl">(ab)ⁿ</div><div class="val">aⁿ × bⁿ</div></div>
+      <div class="ref-cell"><div class="lbl">a⁻ⁿ</div><div class="val">1 / aⁿ</div></div>
+      <div class="ref-cell"><div class="lbl">a^(1/n)</div><div class="val">ⁿ√a</div></div>
+    </div>
+  </div>
+
+  <!-- VERBAL TIPS PANE -->
+  <div class="qr-pane" id="qr-verbal">
+    <h3>RC Question Types — Attack Patterns</h3>
+    <div class="tip-box"><strong>Main Idea:</strong> ignore details, focus on what the author is TRYING to argue. The answer is broad enough to cover the whole passage.</div>
+    <div class="tip-box"><strong>Detail / Specific:</strong> the answer is in the passage. Find the line, then match. Beware paraphrased traps that change scope.</div>
+    <div class="tip-box"><strong>Inference:</strong> what MUST be true based on the passage (not what could be). Eliminate anything that requires outside assumption.</div>
+    <div class="tip-box"><strong>Function / Purpose:</strong> "Why does the author mention X?" — answer relates to the passage's argument structure, not the literal content.</div>
+    <div class="tip-box"><strong>Strengthen / Weaken:</strong> identify the conclusion + reasoning gap. Right answer attacks (or supports) that specific gap.</div>
+    <div class="tip-box"><strong>Vocab-in-context:</strong> the answer is rarely the dictionary definition. Use the sentence's tone to predict.</div>
+
+    <h3>TC / SE Strategy</h3>
+    <div class="tip-box"><strong>Predict before peeking.</strong> Read the sentence, write down (mentally) the word that should fill the blank. Then match.</div>
+    <div class="tip-box"><strong>Find the pivot:</strong> "however," "although," "despite" → the blank contrasts. "Because," "thus," "moreover" → the blank continues.</div>
+    <div class="tip-box"><strong>SE (Sentence Equivalence):</strong> 2 of 6 options must produce sentences with the same meaning. Eliminate any word without a near-synonym in the choices.</div>
+    <div class="tip-box"><strong>3-blank TC:</strong> solve the easiest blank first (often the last one). It anchors the others.</div>
+    <div class="tip-box"><strong>Beware: extreme language.</strong> "Always," "never," "all," "none" in answer choices are usually traps unless the passage uses those exact words.</div>
+
+    <h3>Transition Words by Function</h3>
+    <div class="ref-grid cols-3">
+      <div class="ref-cell"><div class="lbl">Continuation (and so)</div><div class="val">moreover, furthermore, similarly, also, in addition, likewise</div></div>
+      <div class="ref-cell"><div class="lbl">Contrast (but)</div><div class="val">however, although, despite, whereas, conversely, nevertheless, yet, on the contrary</div></div>
+      <div class="ref-cell"><div class="lbl">Cause / Effect</div><div class="val">because, since, therefore, thus, consequently, hence, as a result</div></div>
+      <div class="ref-cell"><div class="lbl">Example</div><div class="val">for example, for instance, such as, including, namely</div></div>
+      <div class="ref-cell"><div class="lbl">Emphasis</div><div class="val">indeed, in fact, especially, particularly, notably</div></div>
+      <div class="ref-cell"><div class="lbl">Concession</div><div class="val">admittedly, granted, of course, while it's true</div></div>
+    </div>
+
+    <h3>High-Yield GRE Word Roots</h3>
+    <div class="verbal-roots">
+      <div class="ref-cell"><div class="lbl">bene-, bon-</div>good (benevolent, bonus)</div>
+      <div class="ref-cell"><div class="lbl">mal-, dys-</div>bad (malicious, dystopia)</div>
+      <div class="ref-cell"><div class="lbl">anti-, contra-</div>against (antithesis, contradict)</div>
+      <div class="ref-cell"><div class="lbl">pro-, pre-</div>forward / before (proactive, prelude)</div>
+      <div class="ref-cell"><div class="lbl">post-</div>after (posthumous)</div>
+      <div class="ref-cell"><div class="lbl">ambi-, ambo-</div>both (ambivalent, ambidextrous)</div>
+      <div class="ref-cell"><div class="lbl">a-, an-, non-</div>without / not (atypical, anarchy)</div>
+      <div class="ref-cell"><div class="lbl">poly-, multi-</div>many (polyglot, multifaceted)</div>
+      <div class="ref-cell"><div class="lbl">mono-, uni-</div>one (monolith, unilateral)</div>
+      <div class="ref-cell"><div class="lbl">omni-, pan-</div>all (omniscient, panacea)</div>
+      <div class="ref-cell"><div class="lbl">eu-</div>good / well (euphoria, eulogy)</div>
+      <div class="ref-cell"><div class="lbl">cred-</div>believe (credible, incredulous)</div>
+      <div class="ref-cell"><div class="lbl">dict-, loqu-, log-</div>speak (dictate, loquacious, eulogy)</div>
+      <div class="ref-cell"><div class="lbl">scrib-, script-</div>write (transcribe, script)</div>
+      <div class="ref-cell"><div class="lbl">vid-, vis-</div>see (evident, visible)</div>
+      <div class="ref-cell"><div class="lbl">aud-</div>hear (audible, auditory)</div>
+      <div class="ref-cell"><div class="lbl">phil-</div>love (philanthropy)</div>
+      <div class="ref-cell"><div class="lbl">phob-</div>fear (xenophobia)</div>
+      <div class="ref-cell"><div class="lbl">soph-</div>wise (sophisticated, sophistry)</div>
+      <div class="ref-cell"><div class="lbl">vac-, van-</div>empty (vacuous, vain)</div>
+      <div class="ref-cell"><div class="lbl">vert-, vers-</div>turn (subvert, reverse)</div>
+      <div class="ref-cell"><div class="lbl">grat-</div>pleasing (gratitude, ingratiate)</div>
+      <div class="ref-cell"><div class="lbl">mut-</div>change (mutation, immutable)</div>
+      <div class="ref-cell"><div class="lbl">temp-</div>time (temporary, contemporary)</div>
+      <div class="ref-cell"><div class="lbl">sub-</div>under (subterfuge, subjugate)</div>
+      <div class="ref-cell"><div class="lbl">super-, supra-</div>above (supersede, supranational)</div>
+      <div class="ref-cell"><div class="lbl">in-, im-</div>not / into (incoherent, inundate)</div>
+      <div class="ref-cell"><div class="lbl">circum-</div>around (circumvent, circumspect)</div>
+      <div class="ref-cell"><div class="lbl">spec-, spect-</div>look (introspect, spectator)</div>
+      <div class="ref-cell"><div class="lbl">corp-</div>body (corporeal, incorporate)</div>
+    </div>
+
+    <h3>Confusable Pairs (often tested)</h3>
+    <div class="ref-grid cols-2">
+      <div class="ref-cell"><div class="lbl">affect / effect</div>affect = verb (to influence); effect = noun (a result)</div>
+      <div class="ref-cell"><div class="lbl">eminent / imminent</div>eminent = distinguished; imminent = about to happen</div>
+      <div class="ref-cell"><div class="lbl">disinterested / uninterested</div>disinterested = impartial; uninterested = bored</div>
+      <div class="ref-cell"><div class="lbl">adverse / averse</div>adverse = harmful; averse = opposed to</div>
+      <div class="ref-cell"><div class="lbl">pragmatic / dogmatic</div>pragmatic = practical; dogmatic = rigidly opinionated</div>
+      <div class="ref-cell"><div class="lbl">venerate / vituperate</div>venerate = revere; vituperate = harshly criticize</div>
+    </div>
+
+    <h3>Time Management on Verbal</h3>
+    <div class="tip-box"><strong>Section pacing:</strong> Verbal section is 27 questions in 41 min ≈ 90 sec/question. RC passages take longer — budget 2.5 min for short, 4 min for long passages. Move fast through TC/SE to bank time for RC.</div>
+    <div class="tip-box"><strong>Don't re-read:</strong> on RC, scan the passage once for structure, then refer back ONLY when answering specific-detail questions. Re-reading is the #1 time killer.</div>
+  </div>
+</div>
+
+<!-- FORMULA PRACTICE -->
+<div class="card">
+  <h2>Formula Practice (TTP Equation Guide) <span class="badge" id="fp-progress">0/0 mastered</span></h2>
+  <div class="fp-tabs">
+    <div class="fp-tab active" data-pane="flashcards" onclick="switchFpTab('flashcards')">Flashcards</div>
+    <div class="fp-tab" data-pane="quiz" onclick="switchFpTab('quiz')">Quick Quiz</div>
+  </div>
+
+  <!-- Flashcards pane -->
+  <div class="fp-pane active" id="pane-flashcards">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Category</label>
+        <select id="fc-filter" onchange="filterCards()"></select>
+      </div>
+      <div class="form-group">
+        <label>Show</label>
+        <select id="fc-show" onchange="filterCards()">
+          <option value="all">All cards</option>
+          <option value="review">Review pile</option>
+          <option value="unseen">Unseen only</option>
+          <option value="known">Mastered</option>
+        </select>
+      </div>
+      <div class="form-group" style="flex: 0 0 auto;">
+        <label>&nbsp;</label>
+        <button class="secondary" onclick="shuffleCards()">Shuffle</button>
+      </div>
+    </div>
+    <div id="fc-wrapper">
+      <div class="fc-card" id="fc-card" onclick="flipCard()">
+        <div class="fc-inner">
+          <div class="fc-front">
+            <div class="fc-cat" id="fc-cat-front"></div>
+            <div class="fc-status" id="fc-status-front"></div>
+            <div id="fc-front-text"></div>
+            <div class="fc-flip-hint">click to flip</div>
+          </div>
+          <div class="fc-back">
+            <div class="fc-cat" id="fc-cat-back"></div>
+            <div class="fc-status" id="fc-status-back"></div>
+            <div id="fc-back-text"></div>
+            <div class="fc-flip-hint" style="opacity:0.5;">click to flip back</div>
+          </div>
+        </div>
+      </div>
+      <div class="fc-controls">
+        <button class="secondary" onclick="prevCard()">← Prev</button>
+        <span class="fc-progress" id="fc-pos">0 / 0</span>
+        <div>
+          <button class="danger" onclick="markCard('review')">Need Review</button>
+          <button onclick="markCard('known')">Got It ✓</button>
+        </div>
+      </div>
+      <button class="secondary" onclick="nextCard()" style="margin-top:10px; width:100%">Next →</button>
+    </div>
+    <div class="fc-empty" id="fc-empty" style="display:none;">No cards match the current filter.</div>
+  </div>
+
+  <!-- Quiz pane -->
+  <div class="fp-pane" id="pane-quiz">
+    <div id="quiz-intro">
+      <p style="margin-bottom: 14px; color: #6b7280; font-size: 14px;">10 multiple-choice questions sampled from your formula bank. Instant feedback on each answer. Score tracked over time.</p>
+      <button onclick="startQuiz()">Start 10-Question Quiz</button>
+      <div id="quiz-history" style="margin-top: 18px;"></div>
+    </div>
+    <div id="quiz-active" style="display:none;">
+      <div class="q-progress-bar"><div class="q-progress-fill" id="q-fill" style="width:0%"></div></div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-size:13px; color:#6b7280;">
+        <span id="q-progress">Question 1 / 10</span>
+        <span id="q-score">Score: 0</span>
+      </div>
+      <div class="q-card">
+        <div class="q-question" id="q-text"></div>
+        <div id="q-options"></div>
+        <div class="q-explain" id="q-explain" style="display:none;"></div>
+      </div>
+      <div style="display:flex; justify-content:flex-end;">
+        <button id="q-next" onclick="nextQuiz()" style="display:none;">Next →</button>
+      </div>
+    </div>
+    <div id="quiz-results" style="display:none; text-align:center; padding: 16px;">
+      <h3 style="margin-bottom: 8px; color: #1F4E79;">Quiz Complete</h3>
+      <div id="q-final-score" style="font-size:36px; font-weight:700; color:#1F4E79; margin: 8px 0;"></div>
+      <div id="q-final-msg" style="margin-bottom: 16px; color: #6b7280;"></div>
+      <button onclick="resetQuiz()">Take Another Quiz</button>
+    </div>
+  </div>
+</div>
+
 <!-- WEEKLY PLAN -->
 <div class="card">
   <h2>Weekly Plan & Topic Checklist</h2>
@@ -455,12 +936,168 @@ const WEEKS = [
 const KEY = "gre_dashboard_v1";
 let state = JSON.parse(localStorage.getItem(KEY) || "{}");
 state = {
-  dailyLogs: state.dailyLogs || {},      // {"YYYY-MM-DD": {hours, vocab, vocabBox, quantBox, verbalBox, errorsBox}}
-  mocks: state.mocks || [],              // [{id, date, source, v, q, total}]
-  errors: state.errors || [],            // [{id, date, section, topic, reason}]
-  topicProgress: state.topicProgress || {},  // {weekNum: {topicIdx: true}}
-  vocabTotal: state.vocabTotal || 0
+  dailyLogs: state.dailyLogs || {},
+  mocks: state.mocks || [],
+  errors: state.errors || [],
+  topicProgress: state.topicProgress || {},
+  vocabTotal: state.vocabTotal || 0,
+  flashcardProgress: state.flashcardProgress || {},  // {cardId: "known"|"review"}
+  quizHistory: state.quizHistory || []               // [{date, score, total}]
 };
+
+// ============ FLASHCARDS DATA (from TTP Equation Guide) ============
+const FLASHCARDS = [
+  // Algebra & Quadratics
+  { c: "Algebra", q: "FOIL method: what does each letter stand for?", a: "First, Outside, Inside, Last" },
+  { c: "Algebra", q: "(x − 7)(x + 4) = ?", a: "x² − 3x − 28" },
+  { c: "Algebra", q: "Expand (x + y)²", a: "x² + 2xy + y²" },
+  { c: "Algebra", q: "Expand (x − y)²", a: "x² − 2xy + y²" },
+  { c: "Algebra", q: "Difference of squares: (x + y)(x − y) = ?", a: "x² − y²" },
+  { c: "Algebra", q: "Factor x² − 9", a: "(x − 3)(x + 3)" },
+  { c: "Algebra", q: "Factor 4x² − 100", a: "(2x − 10)(2x + 10)" },
+  { c: "Algebra", q: "Order of operations (PEMDAS)", a: "Parentheses, Exponents, Multiply/Divide, Add/Subtract" },
+
+  // Number Properties — Even/Odd
+  { c: "Number Props", q: "odd + odd = ?", a: "even" },
+  { c: "Number Props", q: "even + even = ?", a: "even" },
+  { c: "Number Props", q: "even + odd = ?", a: "odd" },
+  { c: "Number Props", q: "even × even = ?", a: "even" },
+  { c: "Number Props", q: "even × odd = ?", a: "even" },
+  { c: "Number Props", q: "odd × odd = ?", a: "odd" },
+  { c: "Number Props", q: "even ÷ odd = ?", a: "even (when divisible)" },
+  { c: "Number Props", q: "(+)(−) = ?", a: "(−)" },
+  { c: "Number Props", q: "(−)(−) = ?", a: "(+)" },
+
+  // Divisibility
+  { c: "Divisibility", q: "Divisible by 2 if …", a: "ones digit is 0, 2, 4, 6, or 8" },
+  { c: "Divisibility", q: "Divisible by 3 if …", a: "sum of digits is divisible by 3" },
+  { c: "Divisibility", q: "Divisible by 4 if …", a: "last 2 digits form a number divisible by 4" },
+  { c: "Divisibility", q: "Divisible by 5 if …", a: "last digit is 0 or 5" },
+  { c: "Divisibility", q: "Divisible by 6 if …", a: "divisible by both 2 AND 3" },
+  { c: "Divisibility", q: "Divisible by 8 if …", a: "last 3 digits form a number divisible by 8" },
+  { c: "Divisibility", q: "Divisible by 9 if …", a: "sum of digits is divisible by 9" },
+  { c: "Divisibility", q: "Divisible by 11 if …", a: "(sum of odd-place digits) − (sum of even-place digits) is divisible by 11" },
+
+  // Factors / Multiples
+  { c: "Factors", q: "Number of factors of N", a: "Prime factorize, add 1 to each exponent, then multiply. Ex: 240 = 2⁴·3·5 → (4+1)(1+1)(1+1) = 20" },
+  { c: "Factors", q: "LCM × GCF identity", a: "If LCM(x,y) = p and GCF(x,y) = q, then xy = pq" },
+  { c: "Factors", q: "Range of possible remainders when dividing by n", a: "Non-negative integer LESS than n (i.e. 0 to n−1)" },
+  { c: "Factors", q: "Number of trailing zeros of N", a: "Number of (5 × 2) pairs in prime factorization of N" },
+  { c: "Factors", q: "Any factorial ≥ 5! ends in …", a: "0 (units digit is always zero)" },
+  { c: "Factors", q: "Prime numbers under 20", a: "2, 3, 5, 7, 11, 13, 17, 19" },
+
+  // Exponents
+  { c: "Exponents", q: "x⁰ (where x ≠ 0) = ?", a: "1" },
+  { c: "Exponents", q: "x⁻¹ = ?", a: "1/x" },
+  { c: "Exponents", q: "x⁻ʸ = ?", a: "1 / xʸ" },
+  { c: "Exponents", q: "(a/b)⁻ⁿ = ?", a: "(b/a)ⁿ" },
+  { c: "Exponents", q: "2ⁿ + 2ⁿ = ?", a: "2ⁿ⁺¹" },
+  { c: "Exponents", q: "3ⁿ + 3ⁿ + 3ⁿ = ?", a: "3ⁿ⁺¹" },
+  { c: "Exponents", q: "Square root of 10,000", a: "100  (perfect square ending in even # of zeros → root has half as many zeros)" },
+
+  // Units digit patterns
+  { c: "Units Digits", q: "Cycle for units digit of powers of 2", a: "2, 4, 8, 6  (length 4)" },
+  { c: "Units Digits", q: "Cycle for units digit of powers of 3", a: "3, 9, 7, 1  (length 4)" },
+  { c: "Units Digits", q: "Cycle for units digit of powers of 7", a: "7, 9, 3, 1  (length 4)" },
+  { c: "Units Digits", q: "Cycle for units digit of powers of 8", a: "8, 4, 2, 6  (length 4)" },
+  { c: "Units Digits", q: "Units digit of any positive power of 5", a: "Always 5" },
+  { c: "Units Digits", q: "Units digit of any positive power of 6", a: "Always 6" },
+
+  // Rates & Work
+  { c: "Rates", q: "Distance = ?", a: "Rate × Time" },
+  { c: "Rates", q: "Average Rate formula", a: "Total Distance / Total Time" },
+  { c: "Rates", q: "Work = ?", a: "Rate × Time" },
+  { c: "Rates", q: "Combined Worker Formula", a: "Work_object_1 + Work_object_2 = Work_total" },
+  { c: "Rates", q: "Catch-up time", a: "Time = Distance / ΔRate (difference of rates)" },
+
+  // Interest & Growth
+  { c: "Interest", q: "Simple Interest formula", a: "I = Principal × Rate × Time" },
+  { c: "Interest", q: "Compound Interest formula", a: "A = P · (1 + r/n)ⁿᵗ" },
+  { c: "Interest", q: "Linear Growth formula", a: "Fₙ = kn + p   (k = constant increase, p = initial value)" },
+
+  // Sequences
+  { c: "Sequences", q: "Express consecutive integers", a: "x, x+1, x+2, x+3, … , x+n" },
+  { c: "Sequences", q: "Express consecutive even (or odd) integers", a: "x, x+2, x+4, x+6, … , x+2n" },
+  { c: "Sequences", q: "Express consecutive multiples of 5", a: "x, x+5, x+10, x+15, … , x+5n" },
+
+  // Combinatorics
+  { c: "Combinatorics", q: "Combinations C(n, k) formula", a: "n! / [(n − k)! × k!]" },
+  { c: "Combinatorics", q: "Permutations P(n, k) formula", a: "n! / (n − k)!" },
+  { c: "Combinatorics", q: "Combinations vs Permutations", a: "Combinations: order does NOT matter. Permutations: order DOES matter." },
+  { c: "Combinatorics", q: "Circular arrangements of k items", a: "(k − 1)!" },
+  { c: "Combinatorics", q: "Permutation w/ indistinguishable items", a: "N! / (r₁! · r₂! · … · rₙ!)" },
+
+  // Probability
+  { c: "Probability", q: "Basic probability formula", a: "(# favorable outcomes) / (total # outcomes)" },
+  { c: "Probability", q: "Sum of probabilities of a sample space", a: "Always 1" },
+  { c: "Probability", q: "P(A) + P(not A) = ?", a: "1  (complementary events)" },
+  { c: "Probability", q: "P(A and B) when A, B independent", a: "P(A) × P(B)" },
+  { c: "Probability", q: "P(A or B) when mutually exclusive", a: "P(A) + P(B)" },
+  { c: "Probability", q: "P(A or B) when NOT mutually exclusive", a: "P(A) + P(B) − P(A and B)" },
+  { c: "Probability", q: "P(at least 1) = ?", a: "1 − P(none of these items occur)" },
+
+  // Coordinate Geometry
+  { c: "Geometry", q: "Slope formula", a: "(y₂ − y₁) / (x₂ − x₁)   = Rise / Run" },
+  { c: "Geometry", q: "Slope-intercept equation of a line", a: "y = mx + b   (m = slope, b = y-intercept)" },
+  { c: "Geometry", q: "Diagonal of a cube (side s)", a: "s · √3" },
+  { c: "Geometry", q: "Diagonal of a rectangular solid", a: "√(L² + W² + H²)" },
+  { c: "Geometry", q: "Slope = 0 means …", a: "Horizontal line" },
+  { c: "Geometry", q: "Slope = undefined means …", a: "Vertical line" },
+];
+
+// ============ QUIZ BANK ============
+const QUIZ_BANK = [
+  { q: "FOIL: (x − 7)(x + 4) = ?", opts: ["x² − 3x − 28", "x² + 3x − 28", "x² − 11x + 28", "x² + 11x + 28"], correct: 0,
+    e: "First: x², Outside: 4x, Inside: −7x, Last: −28 → x² − 3x − 28." },
+  { q: "(a + b)² equals:", opts: ["a² + b²", "a² + 2ab + b²", "a² − 2ab + b²", "a² − b²"], correct: 1,
+    e: "Square of a sum: (a+b)² = a² + 2ab + b²." },
+  { q: "(a − b)(a + b) equals:", opts: ["a² + 2ab + b²", "a² + b²", "a² − b²", "(a−b)²"], correct: 2,
+    e: "Difference of squares." },
+  { q: "Which is divisible by 4?", opts: ["218", "314", "412", "526"], correct: 2,
+    e: "Last two digits divisible by 4. 12 ÷ 4 = 3 ✓" },
+  { q: "What is the units digit of 7²⁵?", opts: ["7", "9", "3", "1"], correct: 0,
+    e: "Cycle of 7: (7, 9, 3, 1). 25 mod 4 = 1 → 1st in cycle = 7." },
+  { q: "odd × odd = ?", opts: ["odd", "even", "either", "zero"], correct: 0,
+    e: "Odd × odd is always odd." },
+  { q: "How many positive factors does 12 have?", opts: ["4", "5", "6", "8"], correct: 2,
+    e: "12 = 2² · 3. (2+1)(1+1) = 6 factors: 1, 2, 3, 4, 6, 12." },
+  { q: "If LCM(x, y) = 60 and GCF(x, y) = 4, then xy =", opts: ["15", "60", "240", "16"], correct: 2,
+    e: "xy = LCM × GCF = 60 × 4 = 240." },
+  { q: "Simple interest on $1000 at 5% for 2 years:", opts: ["$50", "$100", "$150", "$200"], correct: 1,
+    e: "I = P × R × T = 1000 × 0.05 × 2 = $100." },
+  { q: "Compound interest formula:", opts: ["A = P(1+r)ᵗ", "A = P + rt", "A = P(1 + r/n)ⁿᵗ", "A = Prt"], correct: 2,
+    e: "Standard compound interest formula." },
+  { q: "C(5, 2) = ?", opts: ["5", "10", "20", "60"], correct: 1,
+    e: "5! / (3! × 2!) = 120 / 12 = 10." },
+  { q: "P(5, 2) = ?", opts: ["10", "20", "25", "60"], correct: 1,
+    e: "5! / 3! = 20." },
+  { q: "Slope of line through (1, 2) and (3, 8):", opts: ["2", "3", "6", "−3"], correct: 1,
+    e: "(8 − 2) / (3 − 1) = 6/2 = 3." },
+  { q: "Diagonal of a cube with side 4:", opts: ["4", "4√2", "4√3", "12"], correct: 2,
+    e: "Cube diagonal = side × √3 = 4√3." },
+  { q: "P(A and B) when A, B are independent:", opts: ["P(A) + P(B)", "P(A) × P(B)", "P(A) − P(B)", "P(A) / P(B)"], correct: 1,
+    e: "Independent events multiply." },
+  { q: "P(at least 1) = ?", opts: ["1 − P(all)", "1 − P(none)", "P(none) − 1", "P(some)"], correct: 1,
+    e: "Complement of \"at least 1\" is \"none\"." },
+  { q: "(1/2)⁻³ = ?", opts: ["1/8", "−1/8", "8", "−8"], correct: 2,
+    e: "(a/b)⁻ⁿ = (b/a)ⁿ → (2/1)³ = 8." },
+  { q: "2¹⁰ + 2¹⁰ = ?", opts: ["4¹⁰", "2¹¹", "2²⁰", "4¹¹"], correct: 1,
+    e: "Special rule: 2ⁿ + 2ⁿ = 2ⁿ⁺¹." },
+  { q: "Which is divisible by 9?", opts: ["234", "187", "145", "312"], correct: 0,
+    e: "Sum of digits of 234 = 9, divisible by 9." },
+  { q: "Rate × Time = ?", opts: ["Distance (or Work)", "Speed", "Velocity", "Acceleration"], correct: 0,
+    e: "The rate-time product gives distance (D = RT) or work (W = RT)." },
+  { q: "How many ways to arrange 4 people in a circle?", opts: ["4!", "(4 − 1)!", "4² ", "16"], correct: 1,
+    e: "Circular arrangements: (k − 1)! = 3! = 6." },
+  { q: "x⁰ (where x ≠ 0) = ?", opts: ["0", "1", "x", "undefined"], correct: 1,
+    e: "Any nonzero base to the zero power equals 1." },
+  { q: "Range of possible remainders when dividing by 7:", opts: ["0 to 7", "1 to 6", "0 to 6", "1 to 7"], correct: 2,
+    e: "Remainder must be a non-negative integer less than the divisor → 0 through 6." },
+  { q: "Factor x² − 25:", opts: ["(x − 5)²", "(x + 5)²", "(x − 5)(x + 5)", "x(x − 25)"], correct: 2,
+    e: "Difference of squares: a² − b² = (a − b)(a + b)." },
+  { q: "Average rate for a round trip is computed as:", opts: ["(R₁ + R₂) / 2", "Total Distance / Total Time", "(R₁ × R₂) / 2", "R₁ + R₂"], correct: 1,
+    e: "Average rate ≠ average of rates. It equals total distance ÷ total time." },
+];
 function save() { localStorage.setItem(KEY, JSON.stringify(state)); }
 
 // ============ HELPERS ============
@@ -797,6 +1434,261 @@ document.querySelectorAll(".checkbox-row[data-key] input").forEach(cb => {
   });
 });
 
+// ============ FLASHCARDS ============
+let fcDeck = [];   // filtered + ordered indices into FLASHCARDS
+let fcPos = 0;     // position in fcDeck
+
+function buildFcCategories() {
+  const cats = ["all", ...new Set(FLASHCARDS.map(c => c.c))];
+  const sel = document.getElementById("fc-filter");
+  sel.innerHTML = cats.map(c => `<option value="${c}">${c === "all" ? "All categories" : c}</option>`).join("");
+}
+
+function filterCards() {
+  const cat = document.getElementById("fc-filter").value;
+  const show = document.getElementById("fc-show").value;
+  fcDeck = FLASHCARDS.map((_, i) => i).filter(i => {
+    const card = FLASHCARDS[i];
+    if (cat !== "all" && card.c !== cat) return false;
+    const status = state.flashcardProgress[i];
+    if (show === "review" && status !== "review") return false;
+    if (show === "unseen" && status) return false;
+    if (show === "known" && status !== "known") return false;
+    return true;
+  });
+  fcPos = 0;
+  renderCard();
+}
+
+function shuffleCards() {
+  for (let i = fcDeck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [fcDeck[i], fcDeck[j]] = [fcDeck[j], fcDeck[i]];
+  }
+  fcPos = 0;
+  document.getElementById("fc-card").classList.remove("flipped");
+  renderCard();
+}
+
+function renderCard() {
+  const wrapper = document.getElementById("fc-wrapper");
+  const empty = document.getElementById("fc-empty");
+  if (fcDeck.length === 0) {
+    wrapper.style.display = "none";
+    empty.style.display = "block";
+    document.getElementById("fp-progress").textContent = `${countMastered()}/${FLASHCARDS.length} mastered`;
+    return;
+  }
+  wrapper.style.display = "block";
+  empty.style.display = "none";
+  const idx = fcDeck[fcPos];
+  const card = FLASHCARDS[idx];
+  const status = state.flashcardProgress[idx];
+  document.getElementById("fc-card").classList.remove("flipped");
+  document.getElementById("fc-cat-front").textContent = card.c;
+  document.getElementById("fc-cat-back").textContent = card.c;
+  document.getElementById("fc-front-text").textContent = card.q;
+  document.getElementById("fc-back-text").textContent = card.a;
+  ["fc-status-front","fc-status-back"].forEach(id => {
+    const el = document.getElementById(id);
+    el.className = "fc-status";
+    el.textContent = "";
+    if (status === "known") { el.classList.add("known"); el.textContent = "Mastered"; }
+    if (status === "review") { el.classList.add("review"); el.textContent = "Review"; }
+  });
+  document.getElementById("fc-pos").textContent = `${fcPos + 1} / ${fcDeck.length}`;
+  renderFpProgress();
+}
+
+function renderFpProgress() {
+  document.getElementById("fp-progress").textContent = `${countMastered()}/${FLASHCARDS.length} mastered`;
+}
+
+function countMastered() {
+  return Object.values(state.flashcardProgress).filter(v => v === "known").length;
+}
+
+function flipCard() {
+  document.getElementById("fc-card").classList.toggle("flipped");
+}
+
+function nextCard() {
+  if (fcDeck.length === 0) return;
+  fcPos = (fcPos + 1) % fcDeck.length;
+  renderCard();
+}
+
+function prevCard() {
+  if (fcDeck.length === 0) return;
+  fcPos = (fcPos - 1 + fcDeck.length) % fcDeck.length;
+  renderCard();
+}
+
+function markCard(status) {
+  if (fcDeck.length === 0) return;
+  const idx = fcDeck[fcPos];
+  state.flashcardProgress[idx] = status;
+  save();
+  flash(status === "known" ? "Marked as mastered" : "Added to review pile");
+  setTimeout(() => nextCard(), 200);
+}
+
+function switchQrTab(name) {
+  document.querySelectorAll(".qr-tab").forEach((t, i) => {
+    t.classList.toggle("active", t.textContent.toLowerCase().replace(/[^a-z]/g,"").startsWith(
+      ({numbers:"numbers", mult:"multiplication", frac:"fractions", geom:"geometry", quanttips:"quanttricks", verbal:"verbaltips"})[name] || ""
+    ));
+  });
+  // simpler: tag actives by index
+  const order = ["numbers","mult","frac","geom","quanttips","verbal"];
+  document.querySelectorAll(".qr-tab").forEach((t, i) => t.classList.toggle("active", order[i] === name));
+  document.querySelectorAll(".qr-pane").forEach(p => p.classList.toggle("active", p.id === "qr-" + name));
+}
+
+function buildQuickRef() {
+  // Squares 1-25
+  let html = "";
+  for (let i = 1; i <= 25; i++) {
+    const cls = (i >= 11) ? "ref-cell highlight" : "ref-cell";
+    html += `<div class="${cls}"><div class="lbl">${i}²</div><div class="val">${i*i}</div></div>`;
+  }
+  document.getElementById("qr-squares").innerHTML = html;
+
+  // Cubes 1-12
+  html = "";
+  for (let i = 1; i <= 12; i++) {
+    html += `<div class="ref-cell"><div class="lbl">${i}³</div><div class="val">${i*i*i}</div></div>`;
+  }
+  document.getElementById("qr-cubes").innerHTML = html;
+
+  // Powers of 2
+  html = "";
+  for (let i = 1; i <= 15; i++) {
+    html += `<div class="ref-cell"><div class="lbl">2^${i}</div><div class="val">${(2**i).toLocaleString()}</div></div>`;
+  }
+  document.getElementById("qr-pow2").innerHTML = html;
+
+  // Multiplication table 1-15
+  let mhtml = "<thead><tr><th>×</th>";
+  for (let c = 1; c <= 15; c++) mhtml += `<th>${c}</th>`;
+  mhtml += "</tr></thead><tbody>";
+  for (let r = 1; r <= 15; r++) {
+    mhtml += `<tr><td class="row-head">${r}</td>`;
+    for (let c = 1; c <= 15; c++) {
+      const cls = (r === c) ? "diag" : "";
+      mhtml += `<td class="${cls}">${r*c}</td>`;
+    }
+    mhtml += "</tr>";
+  }
+  mhtml += "</tbody>";
+  document.getElementById("qr-mtable").innerHTML = mhtml;
+}
+
+function switchFpTab(name) {
+  document.querySelectorAll(".fp-tab").forEach(t => t.classList.toggle("active", t.dataset.pane === name));
+  document.querySelectorAll(".fp-pane").forEach(p => p.classList.toggle("active", p.id === "pane-" + name));
+  if (name === "quiz") renderQuizHistory();
+}
+
+// ============ QUIZ ============
+let quiz = null;  // {questions, idx, score, answered}
+
+function startQuiz() {
+  const shuffled = [...QUIZ_BANK].sort(() => Math.random() - 0.5).slice(0, 10);
+  quiz = { questions: shuffled, idx: 0, score: 0, answered: false };
+  document.getElementById("quiz-intro").style.display = "none";
+  document.getElementById("quiz-results").style.display = "none";
+  document.getElementById("quiz-active").style.display = "block";
+  renderQuizQuestion();
+}
+
+function renderQuizQuestion() {
+  const q = quiz.questions[quiz.idx];
+  // Shuffle options but track which is correct
+  const optsWithIdx = q.opts.map((o, i) => ({ text: o, isCorrect: i === q.correct }));
+  optsWithIdx.sort(() => Math.random() - 0.5);
+  quiz.shuffledOpts = optsWithIdx;
+
+  document.getElementById("q-text").textContent = q.q;
+  document.getElementById("q-progress").textContent = `Question ${quiz.idx + 1} / ${quiz.questions.length}`;
+  document.getElementById("q-score").textContent = `Score: ${quiz.score}`;
+  document.getElementById("q-fill").style.width = `${(quiz.idx / quiz.questions.length) * 100}%`;
+  document.getElementById("q-explain").style.display = "none";
+  document.getElementById("q-next").style.display = "none";
+
+  const optsEl = document.getElementById("q-options");
+  optsEl.innerHTML = optsWithIdx.map((o, i) => `<div class="q-option" onclick="answerQuiz(${i})">${o.text}</div>`).join("");
+  quiz.answered = false;
+}
+
+function answerQuiz(i) {
+  if (quiz.answered) return;
+  quiz.answered = true;
+  const opts = document.querySelectorAll("#q-options .q-option");
+  const chosen = quiz.shuffledOpts[i];
+  opts.forEach((el, j) => {
+    el.classList.add("disabled");
+    if (quiz.shuffledOpts[j].isCorrect) el.classList.add("correct");
+    else if (j === i) el.classList.add("wrong");
+  });
+  if (chosen.isCorrect) quiz.score++;
+  document.getElementById("q-score").textContent = `Score: ${quiz.score}`;
+  const explainEl = document.getElementById("q-explain");
+  explainEl.textContent = quiz.questions[quiz.idx].e;
+  explainEl.style.display = "block";
+  document.getElementById("q-next").style.display = "inline-block";
+  document.getElementById("q-next").textContent = quiz.idx === quiz.questions.length - 1 ? "Finish →" : "Next →";
+}
+
+function nextQuiz() {
+  if (quiz.idx < quiz.questions.length - 1) {
+    quiz.idx++;
+    renderQuizQuestion();
+  } else {
+    finishQuiz();
+  }
+}
+
+function finishQuiz() {
+  document.getElementById("q-fill").style.width = "100%";
+  state.quizHistory.push({ date: todayStr(), score: quiz.score, total: quiz.questions.length });
+  save();
+  document.getElementById("quiz-active").style.display = "none";
+  document.getElementById("quiz-results").style.display = "block";
+  const pct = Math.round((quiz.score / quiz.questions.length) * 100);
+  document.getElementById("q-final-score").textContent = `${quiz.score} / ${quiz.questions.length}  (${pct}%)`;
+  let msg;
+  if (pct >= 90) msg = "Excellent — formula recall is locked in.";
+  else if (pct >= 70) msg = "Solid. Drill the ones you missed and run another round.";
+  else if (pct >= 50) msg = "Decent foundation. Spend time in flashcards before retrying.";
+  else msg = "These are the foundation formulas — don't move on until you're at 80%+. Hit the flashcards.";
+  document.getElementById("q-final-msg").textContent = msg;
+}
+
+function resetQuiz() {
+  quiz = null;
+  document.getElementById("quiz-results").style.display = "none";
+  document.getElementById("quiz-active").style.display = "none";
+  document.getElementById("quiz-intro").style.display = "block";
+  renderQuizHistory();
+}
+
+function renderQuizHistory() {
+  const el = document.getElementById("quiz-history");
+  if (!state.quizHistory.length) { el.innerHTML = ""; return; }
+  const recent = state.quizHistory.slice(-5).reverse();
+  el.innerHTML = `
+    <div style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 8px;">Recent quizzes</div>
+    <table style="width: auto;">
+      <thead><tr><th>Date</th><th>Score</th><th>%</th></tr></thead>
+      <tbody>${recent.map(h => {
+        const pct = Math.round((h.score / h.total) * 100);
+        const cls = pct >= 80 ? "score-good" : pct >= 60 ? "score-ok" : "score-low";
+        return `<tr><td>${fmtDate(h.date)}</td><td>${h.score} / ${h.total}</td><td><span class="score-badge ${cls}">${pct}%</span></td></tr>`;
+      }).join("")}</tbody>
+    </table>`;
+}
+
 // ============ INIT ============
 function renderAll() {
   renderHeader();
@@ -806,11 +1698,17 @@ function renderAll() {
   renderErrors();
   renderHoursChart();
   renderWeeks();
+  renderFpProgress();
+  renderCard();
+  renderQuizHistory();
 }
 
 // Set today's date as default for mock form
 document.getElementById("m-date").value = todayStr();
 loadToday();
+buildQuickRef();
+buildFcCategories();
+filterCards();
 renderAll();
 </script>
 </body>
